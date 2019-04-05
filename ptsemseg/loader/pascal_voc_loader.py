@@ -6,6 +6,8 @@ import torch
 import numpy as np
 import scipy.misc as m
 import scipy.io as io
+import matplotlib
+matplotlib.use("agg")
 import matplotlib.pyplot as plt
 import glob
 
