@@ -6,16 +6,21 @@ data:
     val_split: val
     img_rows: 512
     img_cols: 1024
-    path: /media/manuel/OS/Datasets/Cityscapes/gtFine/train
+    path: /home/manuel/Documents/Datasets/cityscapes
 training:
+    n_workers: 7
     train_iters: 8500
     batch_size: 2
     val_interval: 500
     print_interval: 25
+    loss:
+        name: 'cross_entropy'
     optimizer:
+        name: 'sgd'
         lr: 1.0e-4
     l_rate: 1.0e-4
-    l_schedule:
+    lr_schedule:
+        name: 'constant_lr'
     momentum: 0.99
     weight_decay: 0.0005
     resume: segnet_cityscapes_best_model.pkl
