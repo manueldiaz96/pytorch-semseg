@@ -194,6 +194,7 @@ def train(cfg, writer, logger):
                         writer.file_writer.get_logdir(),
                         "{}_{}_best_model.pkl".format(cfg["model"]["arch"], cfg["data"]["dataset"]),
                     )
+                    print("Model saved at:", save_path)
                     torch.save(state, save_path)
 
             if (i + 1) == cfg["training"]["train_iters"]:
@@ -202,6 +203,7 @@ def train(cfg, writer, logger):
 
 
 if __name__ == "__main__":
+    begin_time = time.time()
     parser = argparse.ArgumentParser(description="config")
     parser.add_argument(
         "--config",
@@ -227,3 +229,9 @@ if __name__ == "__main__":
     logger.info("Let the games begin")
 
     train(cfg, writer, logger)
+    total_time=time.time() - begin_time
+    hours = int(total_time / 3600)
+    mins = int((total_time-3600*hours)/60)
+    secs = total_time-3600*hours-60*mins
+
+    print("Time: ", "%d:%2d:%.2f"%(hours, mins, secs))
