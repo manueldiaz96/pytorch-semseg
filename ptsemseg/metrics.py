@@ -28,6 +28,7 @@ class runningScore(object):
             - fwavacc
         """
         hist = self.confusion_matrix
+        print(hist)
         acc = np.diag(hist).sum() / hist.sum()
         acc_cls = np.diag(hist) / hist.sum(axis=1)
         acc_cls = np.nanmean(acc_cls)

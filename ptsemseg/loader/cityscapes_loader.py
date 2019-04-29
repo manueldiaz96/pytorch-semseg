@@ -52,7 +52,7 @@ class cityscapesLoader(data.Dataset):
 
     def __init__(
         self,
-        root,
+        root=os.getcwd(),
         split="train",
         is_transform=False,
         img_size=(512, 1024),
@@ -69,7 +69,7 @@ class cityscapesLoader(data.Dataset):
         :param img_size:
         :param augmentations
         """
-        self.root = root
+        self.root = os.getcwd()
         self.split = split
         self.is_transform = is_transform
         self.augmentations = augmentations
@@ -79,8 +79,9 @@ class cityscapesLoader(data.Dataset):
         self.mean = np.array(self.mean_rgb[version])
         self.files = {}
 
-        self.images_base = os.path.join(self.root, "leftImg8bit", self.split)
-        self.annotations_base = os.path.join(self.root, "gtFine", self.split)
+        print(self.root, "cityscapes", self.split)
+        self.images_base = os.path.join(self.root, "cityscapes/leftImg8bit", self.split)
+        self.annotations_base = os.path.join(self.root, "cityscapes/gtFine", self.split)
 
         self.files[split] = recursive_glob(rootdir=self.images_base, suffix=".png")
 
