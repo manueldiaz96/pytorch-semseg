@@ -94,7 +94,7 @@ def train(cfg, writer, logger):
             logger.info(
                 "Loading model and optimizer from checkpoint '{}'".format(cfg["training"]["resume"])
             )
-            checkpoint = torch.load(cfg["training"]["resume"])
+            checkpoint = torch.load(cfg["training"]["resume"], map_location='cpu')
             model.load_state_dict(checkpoint["model_state"])
             optimizer.load_state_dict(checkpoint["optimizer_state"])
             scheduler.load_state_dict(checkpoint["scheduler_state"])
@@ -195,6 +195,7 @@ def train(cfg, writer, logger):
                         "{}_{}_best_model.pkl".format(cfg["model"]["arch"], cfg["data"]["dataset"]),
                     )
                     print("Model saved at:", save_path)
+
                     torch.save(state, save_path)
 
             if (i + 1) == cfg["training"]["train_iters"]:
@@ -216,7 +217,7 @@ if __name__ == "__main__":
     args = parser.parse_args()
 
     with open(args.config) as fp:
-        cfg = yaml.load(fp)
+        cfg = yaml.load(fp, Loader=yaml.FullLoader)
 
     run_id = random.randint(1, 100000)
     logdir = os.path.join("runs", os.path.basename(args.config)[:-4], str(run_id))
@@ -228,10 +229,12 @@ if __name__ == "__main__":
     logger = get_logger(logdir)
     logger.info("Let the games begin")
 
+    start_time = time.time()
     train(cfg, writer, logger)
-    total_time=time.time() - begin_time
-    hours = int(total_time / 3600)
-    mins = int((total_time-3600*hours)/60)
-    secs = total_time-3600*hours-60*mins
 
-    print("Time: ", "%d:%2d:%.2f"%(hours, mins, secs))
+    total_time = time.time() - start_time
+    hours = int(total_time/3600)
+    minutes = int(total_time - (hours*60))
+    secs = total_time - hours*3600 - minutes*60
+    print('Time: %2d:%2d:%2f'%(hours, minutes, secs) )
+

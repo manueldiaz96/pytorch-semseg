@@ -8,8 +8,8 @@ data:
     img_cols: 500
     path: /media/manuel/OS/Datasets/Cityscapes
 training:
-    n_workers: 3
-    train_iters: 12000
+    n_workers: 7
+    train_iters: 148001
     batch_size: 2
     val_interval: 500
     print_interval: 25

@@ -101,6 +101,7 @@ maskedImg = get_color_mask(pred, img)
 
 plt.subplots(1,1, figsize=(20,20))
 plt.imshow(maskedImg)
+plt.show()
 
 #plt.savefig('results/munich_000009_000019_leftImg8bit_road_.png')
 
